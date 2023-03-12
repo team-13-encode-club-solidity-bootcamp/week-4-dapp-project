@@ -5,19 +5,18 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/token-contract-address')
-  getTokenContractAddress(): string {
-    return this.appService.getTokenContractAddress();
+  @Get('/token-stats')
+  getTokenStats(
+    @Query('walletAddress') walletAddress: string,
+  ): Promise<object> {
+    return this.appService.getTokenStats(walletAddress);
   }
 
-  @Get('/total-supply')
-  async getTotalSupply(): Promise<number> {
-    return await this.appService.getTotalSupply();
-  }
-
-  @Get('/ballot-contract-address')
-  getBallotContractAddress(): string {
-    return this.appService.getBallotContractAddress();
+  @Get('/ballot-stats')
+  getBallotStats(
+    @Query('ballotAddress') ballotContractAddress: string,
+  ): Promise<object> {
+    return this.appService.getBallotStats(ballotContractAddress);
   }
 
   @Get('/voting-powers')
@@ -29,12 +28,5 @@ export class AppController {
       ballotContractAddress,
       walletAddress,
     );
-  }
-
-  @Get('/voting-result')
-  getVotingResult(
-    @Query('ballotAddress') ballotContractAddress: string,
-  ): Promise<object> {
-    return this.appService.getVotingResult(ballotContractAddress);
   }
 }

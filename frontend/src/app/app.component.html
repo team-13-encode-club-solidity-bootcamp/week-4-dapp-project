@@ -1,31 +1,87 @@
-<div class="px-4 py-5 my-5 text-center">
+<div class="container px-4 py-5 my-5 text-center">
   <img class="d-block mx-auto mb-4"
     src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80"
     alt="vote_logo" width="72" height="57">
   <h1 class="display-5 fw-bold mb-4">Team 13 Token Vote dApp</h1>
-  <div class="col-lg-6 mx-auto">
+  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-4">
+    <button type="button" class="btn btn-primary btn-lg px-4 gap-3" (click)="syncBlock()">Sync</button>
+    <button *ngIf="accounts?.length === 0" type="button" class="btn btn-outline-secondary btn-lg px-4"
+      (click)="clearBlock()">Clear</button>
+    <button *ngIf="accounts?.length !== 0" type="button" class="btn btn-outline-danger btn-lg px-4"
+      (click)="clearBlock()">Disconnect</button>
+  </div>
+  <div class="col mx-auto">
     <div *ngIf="blockNumber && blockNumber > 0">
       <p class="lead mb-4">We are connected to the Goerli blockchain at the block
         <strong>{{blockNumber}}</strong>
       </p>
-      <button *ngIf="accounts.length === 0" type="button" class="btn btn-success btn-lg px-4 gap-3 mb-4"
+      <button *ngIf="accounts?.length === 0" type="button" class="btn btn-success btn-lg px-4 gap-3 mb-4"
         (click)="connectWallet()">Connect
         Wallet</button>
-      <div *ngIf="accounts.length !== 0" class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Your Wallet Address</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{accounts[0]}}</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
+      <div class="d-flex justify-content-center">
+        <div *ngIf="accounts?.length !== 0" class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-2">Your Wallet Address</h5>
+            <h6 class="card-subtitle mb-3 text-muted">{{accounts[0]}}</h6>
+            <p *ngIf="tokenName !== undefined" class="card-text mb-3">Your Token Balance : {{tokenBalance}}
+            </p>
+            <button *ngIf="tokenName === undefined" type="button" class="btn btn-primary btn-lg px-4 gap-3 mx-1 mb-3"
+              (click)="getTokenStats()">Check
+              Token
+              Stats</button>
+            <div *ngIf="tokenName !== undefined">
+              <button type="button" class="btn btn-success btn-lg px-4 gap-3 mx-1 mb-3"
+                (click)="delegateVotingPower()">Delegate
+                Voting Power</button>
+            </div>
+            <div *ngIf="tokenName !== undefined">
+              <button type="button" class="btn btn-warning btn-lg px-4 gap-3 mx-1 mb-3" (click)="vote()">Vote</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      <button type="button" class="btn btn-primary btn-lg px-4 gap-3" (click)="syncBlock()">Sync</button>
-      <button *ngIf="accounts.length === 0" type="button" class="btn btn-outline-secondary btn-lg px-4"
-        (click)="clearBlock()">Clear</button>
-      <button *ngIf="accounts.length !== 0" type="button" class="btn btn-outline-danger btn-lg px-4"
-        (click)="clearBlock()">Disconnect</button>
-    </div>
+  </div>
+  <div *ngIf="tokenName !== undefined" class="text-start">
+    <table class="table">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Parameter</th>
+          <th scope="col">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Token Contract Address :
+          </td>
+          <td>{{tokenContractAddress}}</td>
+        </tr>
+        <tr>
+          <td>
+            Token Name :
+          </td>
+          <td>{{tokenName}}</td>
+        </tr>
+        <tr>
+          <td>
+            Token Symbol :
+          </td>
+          <td>{{tokenSymbol}}</td>
+        </tr>
+        <tr>
+          <td>
+            Token Decimals :
+          </td>
+          <td>{{tokenDecimals}}</td>
+        </tr>
+        <tr>
+          <td>
+            Total Supply Number :
+          </td>
+          <td>{{totalSupplyNumber}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
