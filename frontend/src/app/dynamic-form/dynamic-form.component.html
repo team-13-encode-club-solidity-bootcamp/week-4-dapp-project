@@ -1,0 +1,24 @@
+<div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+        <div *ngFor="let question of questions" class="form-row mb-3">
+            <app-question [question]="question" [form]="form"></app-question>
+        </div>
+
+        <div class="form-row">
+            <button type="submit" class="btn btn-warning btn-lg px-4 gap-3 mx-1 mb-3"
+                [disabled]="!form.valid">Vote</button>
+        </div>
+    </form>
+
+    <div *ngIf="payLoad" class="form-row">
+        <strong>Saved the following values</strong><br>{{payLoad}}
+    </div>
+</div>
+
+
+<!-- 
+  Copyright Google LLC. All Rights Reserved.
+  Use of this source code is governed by an MIT-style license that
+  can be found in the LICENSE file at https://angular.io/license
+  -->
