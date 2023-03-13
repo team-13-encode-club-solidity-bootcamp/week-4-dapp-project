@@ -15,6 +15,48 @@
       <p class="lead mb-4">We are connected to the Goerli blockchain at the block
         <strong>{{blockNumber}}</strong>
       </p>
+      <div *ngIf="tokenName !== undefined" class="text-start mb-4">
+        <table class="table">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">Parameter</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Token Contract Address :
+              </td>
+              <td>{{tokenContractAddress}}</td>
+            </tr>
+            <tr>
+              <td>
+                Token Name :
+              </td>
+              <td>{{tokenName}}</td>
+            </tr>
+            <tr>
+              <td>
+                Token Symbol :
+              </td>
+              <td>{{tokenSymbol}}</td>
+            </tr>
+            <tr>
+              <td>
+                Token Decimals :
+              </td>
+              <td>{{tokenDecimals}}</td>
+            </tr>
+            <tr>
+              <td>
+                Total Supply Number :
+              </td>
+              <td>{{totalSupplyNumber}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <button *ngIf="accounts?.length === 0" type="button" class="btn btn-success btn-lg px-4 gap-3 mb-4"
         (click)="connectWallet()">Connect
         Wallet</button>
@@ -34,54 +76,15 @@
                 (click)="delegateVotingPower()">Delegate
                 Voting Power</button>
             </div>
-            <div *ngIf="tokenName !== undefined">
-              <button type="button" class="btn btn-warning btn-lg px-4 gap-3 mx-1 mb-3" (click)="vote()">Vote</button>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="tokenName !== undefined" class="text-start">
-    <table class="table">
-      <thead>
-        <tr class="text-center">
-          <th scope="col">Parameter</th>
-          <th scope="col">Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            Token Contract Address :
-          </td>
-          <td>{{tokenContractAddress}}</td>
-        </tr>
-        <tr>
-          <td>
-            Token Name :
-          </td>
-          <td>{{tokenName}}</td>
-        </tr>
-        <tr>
-          <td>
-            Token Symbol :
-          </td>
-          <td>{{tokenSymbol}}</td>
-        </tr>
-        <tr>
-          <td>
-            Token Decimals :
-          </td>
-          <td>{{tokenDecimals}}</td>
-        </tr>
-        <tr>
-          <td>
-            Total Supply Number :
-          </td>
-          <td>{{totalSupplyNumber}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="d-flex justify-content-center">
+    <div *ngIf="tokenName !== undefined" class="col-6">
+      <h2>It's time to votes!</h2>
+      <app-dynamic-form [questions]="questions$ | async"></app-dynamic-form>
+    </div>
   </div>
 </div>

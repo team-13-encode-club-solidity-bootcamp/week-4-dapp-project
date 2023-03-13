@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { ethers } from 'ethers';
 import { HttpClient, HttpParams } from '@angular/common/http';
+
 import tokenContractJSON from '../assets/Team13Token.json';
+import { QuestionBase } from 'src/app/models/question-base';
+import { Observable } from 'rxjs';
+import { QuestionService } from 'src/app/services/question.service';
 
 const { ethereum } = window;
 
@@ -11,6 +15,7 @@ const API_URL = 'http://localhost:3000';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [QuestionService],
 })
 export class AppComponent {
   blockNumber: number | string | undefined;
@@ -22,12 +27,14 @@ export class AppComponent {
   tokenDecimals: number | undefined;
   totalSupplyNumber: number | undefined;
   tokenBalance: number | undefined;
+  questions$: Observable<QuestionBase<any>[]>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, service: QuestionService) {
     // this.provider = ethers.getDefaultProvider('goerli');
     this.provider = new ethers.providers.Web3Provider(ethereum);
     this.accounts = [];
     this.tokenContractAddress = '';
+    this.questions$ = service.getQuestions();
     // console.log(this.accounts);
   }
 
